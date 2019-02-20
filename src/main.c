@@ -50,7 +50,7 @@ void initialize_subsystem_once(void)
 
 void initialize_subsystem(void)
 {
-  static once_flag initialize_subsystem_only_once = ONCE_FLAG_INIT;
+  //static once_flag initialize_subsystem_only_once = ONCE_FLAG_INIT;
 
   //call_once(&initialize_subsystem_only_once, initialize_subsystem_once);
 }
