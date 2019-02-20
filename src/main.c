@@ -101,7 +101,7 @@ int main(int argc, char **argv)
   puts("*** START OF THREAD EXAMPLE ***");
 
   initialize_subsystem();
-  sel4utils_start_thread(&thread1, Thread1_Body, &thread1);
+  sel4utils_start_thread(&thread1, &Thread1_Body, &thread1);
   
   
 //   seL4_DebugDumpScheduler();
