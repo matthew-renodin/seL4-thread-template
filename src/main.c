@@ -57,7 +57,7 @@ void initialize_subsystem(void)
 
 int Thread1_Body(void *arg)
 {
-  sel4utils_thread_t *t = (thrd_t *) arg;
+  sel4utils_thread_t *t = (sel4utils_thread_t *) arg;
   int     rc;
   int     result;
 
@@ -66,32 +66,32 @@ int Thread1_Body(void *arg)
   printf("Thread1(0x%08lx)\n", *t);
   assert(thrd_current() == thread1);
 
-  puts("Thread1 - yield" );
-  thrd_yield();
+//   puts("Thread1 - yield" );
+//   thrd_yield();
 
-  puts("Thread1 - join Thread2" );
-  rc = thrd_join(thread2, &result);
-  assert(rc == thrd_success);
-  printf("Thread1 - thread2 exited with %d\n", result);
+//   puts("Thread1 - join Thread2" );
+//   rc = thrd_join(thread2, &result);
+//   assert(rc == thrd_success);
+//   printf("Thread1 - thread2 exited with %d\n", result);
 
-  puts("Thread1 - exit" );
-  thrd_exit(0);
+//   puts("Thread1 - exit" );
+//   thrd_exit(0);
   return 0;
 }
 
-int Thread2_Body(void *arg)
-{
-  sel4utils_thread_t *t = (thrd_t *) arg;
+// int Thread2_Body(void *arg)
+// {
+//   sel4utils_thread_t *t = (thrd_t *) arg;
 
-  initialize_subsystem();
+//   initialize_subsystem();
 
-  printf("Thread2(0x%08lx)\n", *t);
-  assert(thrd_current() == thread2);
+//   printf("Thread2(0x%08lx)\n", *t);
+//   assert(thrd_current() == thread2);
 
-  puts("Thread2 - exit" );
-  thrd_exit(128);
-  return 0;
-}
+//   puts("Thread2 - exit" );
+//   thrd_exit(128);
+//   return 0;
+// }
 
 int main(int argc, char **argv)
 {
