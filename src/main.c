@@ -120,9 +120,7 @@ int main(int argc, char **argv)
                 "\tDid you write the correct number of registers? See arg4.\n");
 
 
-  sel4utils_arch_init_local_context((void*)Thread1_Body,
-                                    (void*)Thread1_Body, 
-                                    (void *)tcb_stack_top, &regs);
+  sel4utils_arch_init_local_context((void*)Thread1_Body, (void*)Thread1_Body, (void *)tcb_stack_top, &regs);
   error = seL4_TCB_WriteRegisters(tcb_cap_slot, 0, 0, sizeof(regs)/sizeof(seL4_Word), &regs);
   ZF_LOGF_IFERR(error, "Failed to write the new thread's register set.\n"
                 "\tDid you write the correct number of registers? See arg4.\n");
