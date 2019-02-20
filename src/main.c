@@ -101,39 +101,36 @@ int main(int argc, char **argv)
   puts("*** START OF THREAD EXAMPLE ***");
 
   initialize_subsystem();
-  sel4utils_start_thread(&thread1, &Thread1_Body, &thread1, null, 0);
   
-  
-//   seL4_DebugDumpScheduler();
-//   seL4_Error result = seL4_Untyped_Retype(tcb_untyped, seL4_TCBObject, seL4_TCBBits, root_cnode, 0, 0, tcb_cap_slot, 1);
-//   ZF_LOGF_IF(result, "Failed to retype thread: %d", result);
-//   seL4_DebugDumpScheduler();
+  seL4_DebugDumpScheduler();
+  seL4_Error result = seL4_Untyped_Retype(tcb_untyped, seL4_TCBObject, seL4_TCBBits, root_cnode, 0, 0, tcb_cap_slot, 1);
+  ZF_LOGF_IF(result, "Failed to retype thread: %d", result);
+  seL4_DebugDumpScheduler();
 
-//   result = seL4_TCB_Configure(tcb_cap_slot, seL4_CapNull, root_cnode, 0, root_vspace, 0, (seL4_Word) thread_ipc_buff_sym, tcb_ipc_frame);
-//   ZF_LOGF_IF(result, "Failed to configure thread: %d", result);
+  result = seL4_TCB_Configure(tcb_cap_slot, seL4_CapNull, root_cnode, 0, root_vspace, 0, (seL4_Word) thread_ipc_buff_sym, tcb_ipc_frame);
+  ZF_LOGF_IF(result, "Failed to configure thread: %d", result);
 
-//   result = seL4_TCB_SetPriority(tcb_cap_slot, root_tcb, 254);
-//   ZF_LOGF_IF(result, "Failed to set the priority for the new TCB object.\n");
-//   seL4_DebugDumpScheduler();
+  result = seL4_TCB_SetPriority(tcb_cap_slot, root_tcb, 254);
+  ZF_LOGF_IF(result, "Failed to set the priority for the new TCB object.\n");
+  seL4_DebugDumpScheduler();
 
-//   UNUSED seL4_UserContext regs = {0};
-//   int error = seL4_TCB_ReadRegisters(tcb_cap_slot, 0, 0, sizeof(regs)/sizeof(seL4_Word), &regs);
-//   ZF_LOGF_IFERR(error, "Failed to write the new thread's register set.\n"
-//                 "\tDid you write the correct number of registers? See arg4.\n");
-
-
-//   sel4utils_arch_init_local_context((void*)new_thread,
-//                                 (void *)call_once, (void *)&data, (void *)3,
-//                                 (void *)tcb_stack_top, &regs);
-//    rc = thrd_create(&thread1, Thread1_Body, &thread1);
-//   error = seL4_TCB_WriteRegisters(tcb_cap_slot, 0, 0, sizeof(regs)/sizeof(seL4_Word), &regs);
-//   ZF_LOGF_IFERR(error, "Failed to write the new thread's register set.\n"
-//                 "\tDid you write the correct number of registers? See arg4.\n");
+  UNUSED seL4_UserContext regs = {0};
+  int error = seL4_TCB_ReadRegisters(tcb_cap_slot, 0, 0, sizeof(regs)/sizeof(seL4_Word), &regs);
+  ZF_LOGF_IFERR(error, "Failed to write the new thread's register set.\n"
+                "\tDid you write the correct number of registers? See arg4.\n");
 
 
-//   // resume the new thread
-//   error = seL4_TCB_Resume(tcb_cap_slot);
-//   ZF_LOGF_IFERR(error, "Failed to start new thread.\n");
+  sel4utils_arch_init_local_context((void*)Thread1_Body,
+                                    (void*)Thread1_Body, 
+                                    &regs);
+  error = seL4_TCB_WriteRegisters(tcb_cap_slot, 0, 0, sizeof(regs)/sizeof(seL4_Word), &regs);
+  ZF_LOGF_IFERR(error, "Failed to write the new thread's register set.\n"
+                "\tDid you write the correct number of registers? See arg4.\n");
+
+
+  // resume the new thread
+  error = seL4_TCB_Resume(tcb_cap_slot);
+  ZF_LOGF_IFERR(error, "Failed to start new thread.\n");
   
   
   
