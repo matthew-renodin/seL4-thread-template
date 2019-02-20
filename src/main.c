@@ -95,8 +95,8 @@ int Thread2_Body(void *arg)
 
 int main(int argc, char **argv)
 {
-  int             rc;
-  struct timespec delay = {1, 0};
+  //int             rc;
+  //struct timespec delay = {1, 0};
 
   puts("*** START OF THREAD EXAMPLE ***");
 
