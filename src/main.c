@@ -64,7 +64,7 @@ int Thread1_Body(void *arg)
   initialize_subsystem();
 
   printf("Thread1(0x%08lx)\n", *t);
-  assert(thrd_current() == thread1);
+//   assert(thrd_current() == thread1);
 
 //   puts("Thread1 - yield" );
 //   thrd_yield();
@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 
   sel4utils_arch_init_local_context((void*)Thread1_Body,
                                     (void*)Thread1_Body, 
-                                    &regs);
+                                    (void *)tcb_stack_top, &regs);
   error = seL4_TCB_WriteRegisters(tcb_cap_slot, 0, 0, sizeof(regs)/sizeof(seL4_Word), &regs);
   ZF_LOGF_IFERR(error, "Failed to write the new thread's register set.\n"
                 "\tDid you write the correct number of registers? See arg4.\n");
